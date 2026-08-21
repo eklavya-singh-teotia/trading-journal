@@ -1,19 +1,29 @@
-﻿import React from "react";
+import React, { useState } from "react";
 import { ExternalLink, Zap } from "lucide-react";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api/v1";
+import { api } from "../services/api";
 
 /**
- * Redirects the browser to the backend Upstox OAuth initiation endpoint.
- * The backend handles the full OAuth flow — no credentials are handled here.
- * GET /api/v1/upstox/auth
- *   -> redirects to Upstox authorization dialog
+ * Fetches the Upstox OAuth authorization URL from the backend (via cookie-authenticated API call),
+ * then navigates the browser to it.
+ * GET /api/v1/upstox/auth -> returns { authorizationUrl }
+ *   -> browser navigates to Upstox authorization dialog
  *   -> Upstox redirects back to /api/v1/upstox/callback
  *   -> backend redirects to /dashboard?broker=upstox&status=success|error
  */
 export default function ConnectUpstoxButton({ style = {} }) {
-  const handleConnect = () => {
-    window.location.href = `${API_BASE_URL}/upstox/auth`;
+  const [loading, setLoading] = useState(false);
+
+  const handleConnect = async () => {
+    try {
+      setLoading(true);
+      const data = await api.get("/upstox/auth");
+      if (data?.authorizationUrl) {
+        window.location.href = data.authorizationUrl;
+      }
+    } catch (err) {
+      console.error("Failed to initiate Upstox connection:", err);
+      setLoading(false);
+    }
   };
 
   return (
@@ -21,10 +31,11 @@ export default function ConnectUpstoxButton({ style = {} }) {
       type="button"
       className="btn btn-primary"
       onClick={handleConnect}
+      disabled={loading}
       style={{ gap: "8px", ...style }}
     >
       <Zap size={16} />
-      <span>Connect via Upstox OAuth</span>
+      <span>{loading ? "Connecting..." : "Connect via Upstox OAuth"}</span>
       <ExternalLink size={14} style={{ opacity: 0.7 }} />
     </button>
   );

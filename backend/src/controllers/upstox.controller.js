@@ -77,7 +77,9 @@ export const connectUpstox = asyncHandler(async (req, res) => {
 
     const authorizationUrl = buildAuthorizationUrl(state);
 
-    return res.redirect(authorizationUrl);
+    return res.status(200).json(
+        new ApiResponse(200, { authorizationUrl }, "Upstox authorization URL generated.")
+    );
 });
 
 /*
