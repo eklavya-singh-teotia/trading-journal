@@ -8,11 +8,13 @@ import { verifyJWT } from "../middlewares/auth.js";
 
 const router = Router();
 
-// Protect all Upstox routes with user authentication middleware
-router.use(verifyJWT);
+// Upstox Auth Start (Requires logged-in user session)
+router.get("/auth", verifyJWT, connectUpstox);
 
-router.get("/auth", connectUpstox);
+// Upstox OAuth Callback (Public endpoint: authenticity & user session are verified via signed OAuth state parameter)
 router.get("/callback", handleUpstoxCallback);
-router.post("/sync/:accountId", syncUpstoxTrades);
+
+// Sync Upstox Trades (Requires logged-in user session)
+router.post("/sync/:accountId", verifyJWT, syncUpstoxTrades);
 
 export default router;
