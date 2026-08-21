@@ -83,6 +83,26 @@ Open your browser and navigate to:
 http://localhost:5173
 ```
 
+## Vercel Deployment Notes
+
+Deploy the frontend and backend as separate Vercel projects:
+
+- Frontend project root directory: `frontend`
+- Backend project root directory: `backend`
+- Frontend SPA reloads depend on `frontend/vercel.json`; commit and redeploy it so routes like `/login`, `/register`, and `/dashboard` rewrite to `index.html`.
+
+Required production environment variables:
+
+```env
+# frontend project
+VITE_API_BASE_URL=https://your-backend-domain.vercel.app/api/v1
+
+# backend project
+FRONTEND_URL=https://your-frontend-domain.vercel.app
+CORS_ORIGIN=https://your-frontend-domain.vercel.app
+UPSTOX_REDIRECT_URI=https://your-backend-domain.vercel.app/api/v1/upstox/callback
+```
+
 ## Usage
 
 1. Register a new account or log in.
