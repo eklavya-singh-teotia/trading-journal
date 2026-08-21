@@ -1,0 +1,54 @@
+# Dependencies (Applies recursively to root, frontend, and backend)
+node_modules/
+.pnpm-store/
+
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+
+# Temporary Uploads & Processing
+public/temp/*
+!public/temp/.gitkeep
+backend/public/temp/*
+!backend/public/temp/.gitkeep
+
+# Build & Output Directories
+dist/
+dist-ssr/
+build/
+out/
+.vite/
+
+# Logs & Debugging
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Testing & Cache
+coverage/
+.eslintcache
+.cache/
+
+# Editor & IDE Configs
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
