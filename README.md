@@ -1,116 +1,106 @@
-# Intraday Trading Journal
+# Tradr — Trading Journal
 
-An intraday trading journal application built to parse broker CSV tradebooks, process trade executions using a FIFO matching engine, calculate performance analytics, and deliver AI-powered behavioral feedback.
+Tradr is a trading journal built specifically for intraday traders. It helps traders import and organize their trades, automatically match executions, track performance across multiple accounts, and identify behavioral patterns that affect trading decisions.
 
 ## Features
 
-- **CSV Import**: Parses trade execution reports from brokers like Upstox and Zerodha.
-- **FIFO Matching Engine**: Automatically pairs buy and sell transactions to derive closed trades and realized PnL.
-- **Performance Analytics**: Computes overall metrics (Win Rate, Profit Factor, Expectancy) along with time-of-day and day-of-week breakdowns.
-- **Behavioral & AI Insights**: Evaluates psychological leaks (revenge trading, over-leveraging) using rule-based metrics and the Gemini AI API.
-- **Authentication**: Multi-user support with JWT authentication.
+* **Multi-account support** — manage trades across multiple trading accounts.
+* **Broker imports** — supports `.csv`, `.xlsx`, and `.xls` files from **Upstox, Zerodha, and Groww**.
+* **Upstox integration** — connect directly to Upstox and import trading data through its API.
+* **FIFO matching engine** — matches executions into closed trades and calculates realized PnL.
+* **Performance analytics** — Win Rate, Profit Factor, Expectancy, PnL, and time/day-based performance.
+* **Discipline Score** — evaluates trading discipline based on historical trading behavior.
+* **Behavioral insights** — identifies patterns such as revenge trading, overtrading, over-leveraging, and other behavioral leaks.
+* **AI insights** — uses Google Gemini to provide contextual analysis and feedback.
+* **Algorithmic backup engine** — rule-based behavioral analysis acts as a fallback when AI analysis is unavailable.
 
 ## Tech Stack
 
-- **Frontend**: React, Vite, Tailwind CSS, Recharts
-- **Backend**: Node.js, Express.js
-- **Database**: MongoDB (Mongoose)
-- **AI Integration**: Google Gemini API
+* **Frontend:** React, Vite, Tailwind CSS, Recharts
+* **Backend:** Node.js, Express.js
+* **Database:** MongoDB, Mongoose
+* **Authentication:** JWT
+* **AI:** Google Gemini API
+* **Broker API:** Upstox
 
-## Project Structure
+## Setup
 
-```
-intraday/
-├── backend/       # Express API server & business logic
-├── frontend/      # React dashboard SPA
-└── .gitignore     # Global Git ignore file
-```
-
-## Setup & Installation
-
-### Prerequisites
-
-- Node.js (v18+)
-- MongoDB (Local or MongoDB Atlas)
-
-### 1. Environment Configuration
-
-Create a `.env` file inside the `backend/` directory:
-
-```env
-PORT=5000
-MONGO_URI=mongodb://127.0.0.1:27017/intraday_journal
-ACCESS_TOKEN_SECRET=your_jwt_secret_key
-GEMINI_API_KEY=your_gemini_api_key
-CORS_ORIGIN=http://localhost:5173
-```
-
-### 2. Install Dependencies
-
-Install packages for both the backend and frontend:
+### 1. Clone the repository
 
 ```bash
-# Backend installation
+git clone <repository-url>
+cd intraday
+```
+
+### 2. Configure backend environment
+
+Create `.env` inside `backend/`:
+
+```env
+PORT=
+MONGODB_URL=
+CORS_ORIGIN=
+FRONTEND_URL=
+
+ACCESS_TOKEN_SECRET=
+ACCESS_TOKEN_EXPIRY=
+REFRESH_TOKEN_SECRET=
+REFRESH_TOKEN_EXPIRY=
+
+UPSTOX_CLIENT_ID=
+UPSTOX_CLIENT_SECRET=
+UPSTOX_REDIRECT_URI=
+UPSTOX_OAUTH_STATE_SECRET=
+
+GEMINI_API_KEY=
+GEMINI_MODEL=
+```
+
+Fill in the required values for MongoDB, JWT authentication, Upstox OAuth, and Gemini.
+
+### 3. Install dependencies
+
+```bash
 cd backend
 npm install
 
-# Frontend installation
 cd ../frontend
 npm install
 ```
 
-### 3. Running the Application
+### 4. Run the application
 
-Start the backend server:
+Start the backend:
 
 ```bash
 cd backend
 npm run dev
 ```
 
-In a separate terminal, start the frontend development server:
+Start the frontend in a separate terminal:
 
 ```bash
 cd frontend
 npm run dev
 ```
 
-### 4. Access the Application
+Open:
 
-Open your browser and navigate to:
-
-```
+```text
 http://localhost:5173
 ```
 
-## Vercel Deployment Notes
+## How It Works
 
-Deploy the frontend and backend as separate Vercel projects:
-
-- Frontend project root directory: `frontend`
-- Backend project root directory: `backend`
-- Frontend SPA reloads depend on `frontend/vercel.json`; commit and redeploy it so routes like `/login`, `/register`, and `/dashboard` rewrite to `index.html`.
-
-Required production environment variables:
-
-```env
-# frontend project
-VITE_API_BASE_URL=https://your-backend-domain.vercel.app/api/v1
-
-# backend project
-FRONTEND_URL=https://your-frontend-domain.vercel.app
-CORS_ORIGIN=https://your-frontend-domain.vercel.app
-UPSTOX_REDIRECT_URI=https://your-backend-domain.vercel.app/api/v1/upstox/callback
-```
-
-## Usage
-
-1. Register a new account or log in.
-2. Upload your broker's tradebook CSV (Upstox or Zerodha format).
-3. The FIFO matching engine processes your executions into closed trades.
-4. View your performance dashboard — win rate, profit factor, expectancy, and time-based breakdowns.
-5. Review AI-generated behavioral insights to spot patterns like revenge trading or over-leveraging.
+1. Create an account and log in.
+2. Add or select a trading account.
+3. Import broker data using CSV/Excel or connect directly to Upstox.
+4. Tradr processes executions through its FIFO matching engine.
+5. View PnL and performance analytics.
+6. Analyze historical behavior through the discipline score and behavioral engine.
+7. Get deeper AI-powered insights using Gemini.
 
 ## License
 
-This project is licensed under the MIT License.
+MIT
+
