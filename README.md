@@ -2,7 +2,7 @@
 
 Tradr is a trading journal built specifically for intraday traders. It helps traders import and organize their trades, automatically match executions, track performance across multiple accounts, and identify behavioral patterns that affect trading decisions.
 
-[Tradr](tradr-ruddy.vercel.app)
+<a href="tradr-ruddy.vercel.app" target="_blank">Tradr</a>
 
 ## Features
 
